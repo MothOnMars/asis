@@ -18,7 +18,7 @@ The server code that runs the image search component of [Search.gov](https://sea
 
 ### Ruby
 
-This code is currently tested against [Ruby 2.3](http://www.ruby-lang.org/en/downloads/).
+This code is currently tested against [Ruby 2.6](http://www.ruby-lang.org/en/downloads/).
 
 ### Configuration
 
