@@ -78,5 +78,10 @@ workflows:
       - build:
           matrix:
             parameters:
-              ruby_version: ['2.5.5','2.6.6','2.7.2']
-              elasticsearch_version: ['6.8.9','7.9.3']
+              ruby_version:
+                - 2.5.5
+                - 2.6.6
+                - 2.7.3
+              elasticsearch_version:
+                - 6.8.9
+                - 7.9.3
