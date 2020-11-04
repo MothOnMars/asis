@@ -20,6 +20,12 @@ jobs:
       RUBY_VERSION: << parameters.ruby_version >>
       ELASTICSEARCH_VERSION: << parameters.elasticsearch_version >>
     executor: test_executor
+    parameters:
+      ruby_version:
+        type: string
+      elasticsearch_version:
+        type: string
+        default: 6.8.9
     steps:
       - checkout
       - run:
