@@ -128,7 +128,7 @@ describe ImageSearch do
       expect(image_search_results.total).to eq(2)
     end
 
-    it 'should filter on instagram profiles' do
+    xit 'should filter on instagram profiles' do
       image_search = ImageSearch.new('earth', instagram_profiles: ['user1'])
       image_search_results = image_search.search
       expect(image_search_results.total).to eq(1)

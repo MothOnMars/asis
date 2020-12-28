@@ -44,6 +44,7 @@ group :development, :test do
   gem 'puma', '~> 3.12'
 
   gem 'binding_of_caller'
+  gem 'pry-byebug'
   gem 'pry-rails'
   gem 'rspec-rails', '~> 3.8.2'
 end

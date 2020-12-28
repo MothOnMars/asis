@@ -10,7 +10,7 @@ Elasticsearch::Persistence.client = Elasticsearch::Client.new(
   reload_connections: true
 )
 
-if Rails.env.development?
+#if Rails.env.development?
   logger = ActiveSupport::Logger.new(STDERR)
   logger.level = Logger::DEBUG
   logger.formatter = proc { |_s, _d, _p, m| "\e[2m#{m}\n\e[0m" }
@@ -21,4 +21,4 @@ if Rails.env.development?
     klass = File.basename(f, '.*').camelize.constantize
     klass.create_index_and_alias! if klass.respond_to?(:create_index_and_alias!) && !klass.alias_exists?
   end
-end
+#end

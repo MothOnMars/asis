@@ -40,6 +40,7 @@ class ImageSearchResults
   end
 
   def extract_title(type, hit)
-    type == 'InstagramPhoto' ? hit['_source']['caption'] : hit['_source']['title']
+    #type == 'InstagramPhoto' ? hit['_source']['caption'] : hit['_source']['title']
+    hit['_index'].match?(/instagram_photo/) ? hit['_source']['caption'] : hit['_source']['title']
   end
 end
