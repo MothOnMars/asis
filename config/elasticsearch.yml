@@ -1,6 +1,6 @@
 development: &default
   hosts:
-    - localhost
+    - localhost:9271
   user: ''
   password: ''
   number_of_shards: 1

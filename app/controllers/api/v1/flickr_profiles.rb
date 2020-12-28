@@ -21,6 +21,7 @@ module API
         post do
           flickr_profile = FlickrProfile.new(name: params[:name], id: params[:id], profile_type: params[:profile_type])
           flickr_profile.save && FlickrPhotosImporter.perform_async(flickr_profile.id, flickr_profile.profile_type)
+
           flickr_profile
         end
       end

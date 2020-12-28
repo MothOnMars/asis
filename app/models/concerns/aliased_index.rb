@@ -5,6 +5,7 @@ module AliasedIndex
 
   included do
     index_name alias_name
+    document_type '_doc'
   end
 
   module ClassMethods
@@ -22,7 +23,14 @@ module AliasedIndex
 
     def create_index_and_alias!
       current_name = timestamped_index_name
-      create_index!(index: current_name)
+      Elasticsearch::Persistence.client.indices.create(
+        index: current_name,
+        body: {
+          mappings: mappings.to_hash[:_doc],
+          settings: settings
+        }
+      )
+#      create_index!(index: current_name, include_type_name: true)
       Elasticsearch::Persistence.client.indices.put_alias index: current_name, name: alias_name
     end
 
