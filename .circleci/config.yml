@@ -83,3 +83,6 @@ workflows:
       - build:
           name: 'ruby 2.7, ES 6.8'
           ruby_version: 2.7.0
+      - build:
+          name: 'ruby 3.0, ES 6.8'
+          ruby_version: 3.0.0
