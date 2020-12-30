@@ -34,7 +34,7 @@ class ImageSearchResults
 
   def extract_results(hits)
     hits.map do |hit|
-      type = hit['_type'].camelize
+      type = hit['_source']['type'].camelize
       Image.new(type, extract_title(type, hit), hit['_source']['url'], hit['_source']['thumbnail_url'], hit['_source']['taken_at'])
     end
   end

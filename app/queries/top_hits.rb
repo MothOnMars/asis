@@ -198,7 +198,7 @@ class TopHits
   def flickr_profiles_filter(json, flickr_groups, flickr_users)
     json.bool do
       json.must do
-        json.child! { json.term { json._type 'flickr_photo' } }
+        json.child! { json.term { json.type 'flickr_photo' } }
       end
       json.set! :should do
         flickr_profiles_filter_child('owner', flickr_users, json)
@@ -267,7 +267,7 @@ class TopHits
     json.bool do
       json.must do
         json.child! { json.terms { json.set! field, terms } }
-        json.child! { json.term { json._type type } }
+        json.child! { json.term { json.type type } }
       end
     end
   end
