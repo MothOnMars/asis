@@ -16,6 +16,10 @@ module IndexablePhoto
     attribute :thumbnail_url, String, mapping: ElasticSettings::KEYWORD
     attribute :popularity, Integer, default: 0, mapping: { type: 'integer' }
     attribute :album, String, mapping: { type: 'keyword', index: true }
+    #add spec
+    attribute :type, String,
+      default: -> (photo, _attr) { photo.class.name.underscore },
+      mapping: ElasticSettings::KEYWORD
 
     validates :url, presence: true
     validates :thumbnail_url, presence: true
