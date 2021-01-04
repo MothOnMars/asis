@@ -5,7 +5,6 @@ module AliasedIndex
 
   included do
     index_name alias_name
-    document_type '_doc'
   end
 
   module ClassMethods
