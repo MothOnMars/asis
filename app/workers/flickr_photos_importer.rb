@@ -10,6 +10,7 @@ class FlickrPhotosImporter
   OPTIONS = { per_page: MAX_PHOTOS_PER_REQUEST, extras: EXTRA_FIELDS }.freeze
 
   def perform(id, profile_type, days_ago = nil)
+    Rails.logger.info "GETTING PHOTOS FOR #{id}"
     page = 1
     pages = 1
     min_ts = days_ago.present? ? days_ago.days.ago.to_i : 0
@@ -36,6 +37,7 @@ class FlickrPhotosImporter
   private
 
   def get_photos(id, profile_type, options)
+    puts 'getting photos'
     method = "get_#{profile_type}_photos"
     send(method, id, options)
   rescue StandardError => e
@@ -44,6 +46,7 @@ class FlickrPhotosImporter
   end
 
   def get_user_photos(id, options)
+    puts 'getting user photos'
     FlickRaw::Flickr.new.people.getPublicPhotos(options.merge(user_id: id))
   end
 
@@ -52,15 +55,19 @@ class FlickrPhotosImporter
   end
 
   def store_photos(flickr_photo_structures, group_id)
+    puts 'storing photos'
     flickr_photo_structures.collect do |flickr_photo_structure|
       store_photo(flickr_photo_structure, group_id)
     end.compact.select(&:persisted?)
   end
 
   def store_photo(flickr_photo_structure, group_id)
+    Rails.logger.info 'storing photo'
     attributes = get_attributes(flickr_photo_structure, group_id)
+    Rails.logger.info 'creating photo'
     FlickrPhoto.create(attributes, op_type: 'create')
   rescue Elasticsearch::Transport::Transport::Errors::Conflict
+    Rails.logger.info 'rescuing conflict'
     script = {
       source: 'ctx._source.popularity = params.new_popularity;',
       lang: 'painless',
