@@ -223,8 +223,22 @@ describe FlickrPhotosImporter do
     end
 
     context 'when photo already exists in the index' do
+      let(:photo1) do
+        Hashie::Mash.new(
+          id: 'already exists',
+          owner: 'owner1',
+          tags: nil,
+          title: 'new title',
+          description: 'tags are nil',
+          datetaken: '2014-07-09 12:34:56',
+          views: 101,
+          url_o: 'http://photo1',
+          url_q: 'http://photo_thumbnail1',
+          dateupload: 9.days.ago.to_i
+        )
+      end
+
       before do
-        photo1 = Hashie::Mash.new(id: 'already exists', owner: 'owner1', tags: nil, title: 'new title', description: 'tags are nil', datetaken: '2014-07-09 12:34:56', views: 101, url_o: 'http://photo1', url_q: 'http://photo_thumbnail1', dateupload: 9.days.ago.to_i)
         batch1_photos = [photo1]
         allow(batch1_photos).to receive(:pages).and_return(1)
         allow(importer).to receive(:get_photos).with(
@@ -234,6 +248,7 @@ describe FlickrPhotosImporter do
           extras: FlickrPhotosImporter::EXTRA_FIELDS,
           page: 1
         ).and_return(batch1_photos)
+        # why leave the initial title unchanged?
         FlickrPhoto.create(id: 'already exists', owner: 'owner1', tags: [], title: 'initial title', description: 'desc 1', taken_at: Date.current, popularity: 100, url: 'http://photo1', thumbnail_url: 'http://photo_thumbnail1', album: 'album1', groups: [])
       end
 
